@@ -1,21 +1,37 @@
 {
   "name": "face-box-viewer",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "author": {
+    "name": "Chuu-Hsiang Hung",
+    "email": "eric.hung0404@gmail.com"
+  },
+  "description": "A face box viewer for face detection model",
+  "homepage": "./",
+  "repository": "https://github.com/apothiki/face-box-viewer",
+  "main": "main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^2.0.0",
+    "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "wait-on": "^7.2.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npx cross-env BROWSER=none react-scripts start",
+    "start-electron": "wait-on http://localhost:3000 && electron .",
+    "start-all": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
+    "debug-electron": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron --inspect=5858 .\"",
     "build": "react-scripts build",
+    "build-electron": "npm run build && node build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "npm run build-electron"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +50,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv": "^10.0.0",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
   }
 }
